@@ -6,7 +6,9 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import { useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-
+import useFetch from "./useFetch";
+import { MessagesContext, useDetails } from "./Chat";
+import Input from "./Input";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -17,38 +19,50 @@ const useStyles = makeStyles((theme) => ({
       height: theme.spacing(30),
     },
   },
+  input: {
+    width: theme.spacing(100),
+  },
 }));
 
 const Message = () => {
   //const { loading = false } = props;
-  const [userName, setUsername] = useState("mohan");
+  const value = useDetails();
+  const [userName, setUsername] = useState(value.userName);
   const [count, setCount] = useState(0);
-  const [data, setData] = useState([]);
-  const [todo, setTodos] = useState([]);
+  // const [data, setData] = useState([]);
+  // const [todo, setTodos] = useState([]);
   const classes = useStyles();
-
-  useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/users`)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-      });
-    return () => {
-      console.log("will un mount");
-    };
-  }, [count]);
-  useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/todos`)
-      .then((res) => res.json())
-      .then((todo) => {
-        setTodos(todo);
-      });
-    return () => {
-      console.log("will un mount");
-    };
-  }, [count]);
+  const data = useFetch("https://jsonplaceholder.typicode.com/users");
+  const todo = useFetch("https://jsonplaceholder.typicode.com/todos");
+  console.log(data);
+  // useEffect(() => {
+  //   fetch(`https://jsonplaceholder.typicode.com/users`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setData(data);
+  //     });
+  //   return () => {
+  //     console.log("will un mount");
+  //   };
+  // }, [count]);
+  // useEffect(() => {
+  //   fetch(`https://jsonplaceholder.typicode.com/todos`)
+  //     .then((res) => res.json())
+  //     .then((todo) => {
+  //       setTodos(todo);
+  //     });
+  //   return () => {
+  //     console.log("will un mount");
+  //   };
+  // }, [count]);
   return (
     <div>
+      <Input />
+      <h1>Context</h1>
+      <h3>{value.userName}</h3>
+      {/* <MessagesContext.Consumer>
+        {(value) => <h3>{value.userName}</h3>}
+      </MessagesContext.Consumer> */}
       <Typography variant="h1">{userName}</Typography>
       <Button
         variant="outlined"
