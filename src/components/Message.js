@@ -1,6 +1,6 @@
-import { Button, IconButton, Typography } from "@material-ui/core";
+import { Button, IconButton, TextField, Typography } from "@material-ui/core";
 import React from "react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { useEffect } from "react";
@@ -31,6 +31,22 @@ const Message = () => {
   const [count, setCount] = useState(0);
   // const [data, setData] = useState([]);
   // const [todo, setTodos] = useState([]);
+  const [a, setA] = useState(0);
+  const [b, setB] = useState(0);
+  const [dark, setDark] = useState(false);
+  const sumOfTwo = (a, b) => {
+    for (var i = 0; i < 10; i++) {}
+    return Number(a) + Number(b);
+  };
+  const sum = useMemo(() => {
+    return sumOfTwo(a, b);
+  }, [a, b]);
+  const theme = useMemo(() => {
+    return {
+      backgroundColor: dark ? "black" : "white",
+      color: dark ? "white" : "black",
+    };
+  }, [dark]);
   const classes = useStyles();
   const data = useFetch("https://jsonplaceholder.typicode.com/users");
   const todo = useFetch("https://jsonplaceholder.typicode.com/todos");
@@ -57,6 +73,28 @@ const Message = () => {
   // }, [count]);
   return (
     <div>
+      <h1>useMemo</h1>
+      <TextField
+        label="A"
+        variant="outlined"
+        value={a}
+        onChange={(e) => setA(e.target.value)}
+      />
+      <TextField
+        label="B"
+        variant="outlined"
+        value={b}
+        onChange={(e) => setB(e.target.value)}
+      />
+      <h1 style={theme}>{sum}</h1>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => setDark(!dark)}
+      >
+        Change Name
+      </Button>
+      <h1>HI</h1>
       <Input />
       <h1>Context</h1>
       <h3>{value.userName}</h3>

@@ -24,6 +24,7 @@ const Input = () => {
           value={value.userName}
           onChange={(e) => value.setUserName(e.target.value)}
         />
+        {console.log(value.userName)}
       </form>
     </div>
   );
