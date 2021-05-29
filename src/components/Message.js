@@ -1,5 +1,5 @@
 import { Button, IconButton, TextField, Typography } from "@material-ui/core";
-import React from "react";
+import React, { useCallback } from "react";
 import { useState, useMemo } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -47,6 +47,12 @@ const Message = () => {
       color: dark ? "white" : "black",
     };
   }, [dark]);
+  const getSum = useCallback(
+    (number) => {
+      return [parseInt(a) + parseInt(b) + parseInt(number)];
+    },
+    [a, b]
+  );
   const classes = useStyles();
   const data = useFetch("https://jsonplaceholder.typicode.com/users");
   const todo = useFetch("https://jsonplaceholder.typicode.com/todos");
@@ -114,6 +120,13 @@ const Message = () => {
           <AddIcon />
         </IconButton>
         <Typography variant="h3">{count}</Typography>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => setCount(getSum(5))}
+        >
+          Get sum
+        </Button>
         <IconButton onClick={() => setCount(count - 1)} color="secondary">
           <RemoveIcon />
         </IconButton>
