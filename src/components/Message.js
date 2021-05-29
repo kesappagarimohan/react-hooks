@@ -1,5 +1,5 @@
 import { Button, IconButton, TextField, Typography } from "@material-ui/core";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useLayoutEffect, useRef } from "react";
 import { useState, useMemo } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -59,6 +59,9 @@ const Message = () => {
   console.log(data);
   useEffect(() => {
     console.log("Theme updated");
+  }, [theme]);
+  useLayoutEffect(() => {
+    console.log("Theme updated by layout");
   }, [theme]);
 
   const input1 = useRef();
