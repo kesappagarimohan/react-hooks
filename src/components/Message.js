@@ -1,5 +1,5 @@
 import { Button, IconButton, TextField, Typography } from "@material-ui/core";
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { useState, useMemo } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -57,6 +57,11 @@ const Message = () => {
   const data = useFetch("https://jsonplaceholder.typicode.com/users");
   const todo = useFetch("https://jsonplaceholder.typicode.com/todos");
   console.log(data);
+  useEffect(() => {
+    console.log("Theme updated");
+  }, [theme]);
+
+  const input1 = useRef();
   // useEffect(() => {
   //   fetch(`https://jsonplaceholder.typicode.com/users`)
   //     .then((res) => res.json())
@@ -83,15 +88,25 @@ const Message = () => {
       <TextField
         label="A"
         variant="outlined"
+        ref={input1}
         value={a}
         onChange={(e) => setA(e.target.value)}
       />
+
       <TextField
         label="B"
         variant="outlined"
         value={b}
         onChange={(e) => setB(e.target.value)}
       />
+      <input type="text" ref={input1} />
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => input1.current.focus()}
+      >
+        Focus input1
+      </Button>
       <h1 style={theme}>{sum}</h1>
       <Button
         variant="contained"
